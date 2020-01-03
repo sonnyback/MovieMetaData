@@ -58,24 +58,24 @@ struct MovieDBManager {
         }.resume()
     }
     
-    func fetchMovies(for imdbId: String) {
-        
-        let url = URL(string: createURL(for: imdbId))
-        let request = URLRequest(url: url!, cachePolicy: URLRequest.CachePolicy.reloadIgnoringCacheData, timeoutInterval: 10)
-        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: .main)
-
-        let task = session.dataTask(with: request, completionHandler: { (dataOrNil, response, error) in
-            if let data = dataOrNil {
-                if let responseDictionary = try!  JSONSerialization.jsonObject(with: data, options: [])
-                    as? NSDictionary {
-                    print("Response: \(responseDictionary)")
-                }
-            }
-        })
-        task.resume()
-    }
+//    func fetchMovies(for imdbId: String) {
+//
+//        let url = URL(string: createURL(for: imdbId))
+//        let request = URLRequest(url: url!, cachePolicy: URLRequest.CachePolicy.reloadIgnoringCacheData, timeoutInterval: 10)
+//        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: .main)
+//
+//        let task = session.dataTask(with: request, completionHandler: { (dataOrNil, response, error) in
+//            if let data = dataOrNil {
+//                if let responseDictionary = try!  JSONSerialization.jsonObject(with: data, options: [])
+//                    as? NSDictionary {
+//                    print("Response: \(responseDictionary)")
+//                }
+//            }
+//        })
+//        task.resume()
+//    }
     
-    mutating func fetchJSON(for imdbId: String) {
+    mutating func fetchJSON(for imdbId: String) -> Movie? {
         
         // url for the petition data in json
         let urlString = createURL(for: imdbId)
@@ -84,15 +84,15 @@ struct MovieDBManager {
         if let url = URL(string: urlString) {
             if let data = try? Data(contentsOf: url) {
                 print("We got the data...\(data)")
-                parse(json: data)
-                return // data fetch and parsing was successfull so we can exit
+                return parse(json: data)
+                //return // data fetch and parsing was successfull so we can exit
             }
         }
-        // if we make it here, there was an error
-        //performSelector(onMainThread: #selector(showError), with: nil, waitUntilDone: false)
+        // if we make it here, there was an error so return nil
+        return nil
     }
     
-    private mutating func parse(json: Data) {
+    private mutating func parse(json: Data) -> Movie? {
         print("Entered parse(json)...")
         let decoder = JSONDecoder()
         var movies: [Movie]
@@ -101,14 +101,17 @@ struct MovieDBManager {
         if let jsonData = try? decoder.decode(Root.self, from: json) {
             movies = jsonData.results
             //print("JSON parsed! \(jsonData)")
-            print("movies: \(movies.count)")
-            self.movie = movies.first ?? nil
-            if let movie = self.movie {
+            print("Movies returned: \(movies.count)")
+            //self.movie = movies.first ?? nil
+            if let movie = movies.first {
                 print("Movie: \(movie)")
+                return movie
             }
         } else {
             print("Error parsing the JSON!")
         }
+        // if we get here something went wrong so return nil
+        return nil
     }
 
     

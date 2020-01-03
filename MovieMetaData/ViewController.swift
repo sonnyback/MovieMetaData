@@ -43,11 +43,16 @@ class ViewController: NSViewController {
         
         if movieId.isEmpty {
             print("Opps! You didn't enter an IMDB ID!")
+            textDisplayField.stringValue = "Opps! You didn't enter an IMDB ID! Try again..."
         } else {
             textDisplayField.stringValue = "IMDB id: \(movieId)"
-            movieDBManager.fetchJSON(for: movieId)
-            //movieDBManager.fetchMovies(for: movieId)
-            //movieDBManager.fetchMovieDataFor(imdbId: imdbMovieID)
+            if let movie = movieDBManager.fetchJSON(for: movieId) {
+                print("VC Movie: \(movie)")
+                textDisplayField.stringValue += "\nTitle: \(movie.title)\nRelease Date: \(movie.releaseDate)\nOverview: \(movie.overview)\n"
+            } else {
+                print("Error: nil was returned instead of a Movie")
+                textDisplayField.stringValue = "Error: nil was returned instead of a Movie"
+            }
         }
     }
     

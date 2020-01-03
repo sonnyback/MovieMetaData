@@ -19,7 +19,7 @@ struct Movie: Codable {
     var posterPath: String
 //    let rating = ""
     
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         //case results = "movie_results"
         case genreIds = "genre_ids"
         case releaseDate = "release_date"
