@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E08A1D3723B27561005986C2 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08A1D3623B27561005986C2 /* Movie.swift */; };
 		E08A1D3C23BBA532005986C2 /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08A1D3B23BBA532005986C2 /* Root.swift */; };
+		E08A1D3E23BF8FD4005986C2 /* XMLWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08A1D3D23BF8FD4005986C2 /* XMLWriter.swift */; };
 		E0D379AC23AD514B00ACC782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D379AB23AD514B00ACC782 /* AppDelegate.swift */; };
 		E0D379AE23AD514B00ACC782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D379AD23AD514B00ACC782 /* ViewController.swift */; };
 		E0D379B023AD514C00ACC782 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0D379AF23AD514C00ACC782 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		E08A1D3623B27561005986C2 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		E08A1D3B23BBA532005986C2 /* Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Root.swift; sourceTree = "<group>"; };
+		E08A1D3D23BF8FD4005986C2 /* XMLWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLWriter.swift; sourceTree = "<group>"; };
 		E0D379A823AD514B00ACC782 /* MovieMetaData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieMetaData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0D379AB23AD514B00ACC782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0D379AD23AD514B00ACC782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				E0D379BB23AD798000ACC782 /* MovieDBManager.swift */,
 				E0D379AF23AD514C00ACC782 /* Assets.xcassets */,
 				E0D379B123AD514C00ACC782 /* Main.storyboard */,
+				E08A1D3D23BF8FD4005986C2 /* XMLWriter.swift */,
 				E08A1D3823B2756C005986C2 /* Model */,
 				E0D379B423AD514C00ACC782 /* Info.plist */,
 				E0D379B523AD514C00ACC782 /* MovieMetaData.entitlements */,
@@ -152,6 +155,7 @@
 			files = (
 				E0D379BC23AD798000ACC782 /* MovieDBManager.swift in Sources */,
 				E0D379AE23AD514B00ACC782 /* ViewController.swift in Sources */,
+				E08A1D3E23BF8FD4005986C2 /* XMLWriter.swift in Sources */,
 				E08A1D3723B27561005986C2 /* Movie.swift in Sources */,
 				E0D379AC23AD514B00ACC782 /* AppDelegate.swift in Sources */,
 				E08A1D3C23BBA532005986C2 /* Root.swift in Sources */,

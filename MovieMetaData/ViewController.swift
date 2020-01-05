@@ -46,9 +46,11 @@ class ViewController: NSViewController {
             textDisplayField.stringValue = "Opps! You didn't enter an IMDB ID! Try again..."
         } else {
             textDisplayField.stringValue = "IMDB id: \(movieId)"
-            if let movie = movieDBManager.fetchJSON(for: movieId) {
-                print("VC Movie: \(movie)")
-                textDisplayField.stringValue += "\nTitle: \(movie.title)\nRelease Date: \(movie.releaseDate)\nOverview: \(movie.overview)\n"
+            if var movie = movieDBManager.fetchJSON(for: movieId) {
+                // get the string respresentation of the genres(Ints)
+                movie.genre = movie.getGenreStringFrom(array: movie.genreIds)
+                textDisplayField.stringValue += "\n\nTitle: \(movie.title)\n\nRelease Date: \(movie.releaseDate)\n\nGenre: \(movie.genre)\n\nOverview: \(movie.overview)\n"
+                XMLWriter.writeXMLOutputFor(movie: movie)
             } else {
                 print("Error: nil was returned instead of a Movie")
                 textDisplayField.stringValue = "Error: nil was returned instead of a Movie"
