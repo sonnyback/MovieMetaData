@@ -32,7 +32,7 @@ struct MovieDBManager {
         print("Entered createURL() for movieId: \(imdbId)")
         //return movieDBURL + imdbMovieId + apiKeyString + apiKeyValue + languageSource
         let urlString = movieDBURL + imdbId + apiKeyString + apiKeyValue + languageSource
-        print("urlString: \(urlString)")
+        print("Connecting to: \(urlString)")
         return urlString
     }
     
@@ -97,7 +97,7 @@ struct MovieDBManager {
         // parse the json data into the Petitions struct object
         if let jsonData = try? decoder.decode(Root.self, from: json) {
             movies = jsonData.results
-            print("Movies returned: \(movies.count)")
+            print("JSON parsing successful! Returned: \(movies.count) movie result!")
             //self.movie = movies.first ?? nil
             if let movie = movies.first {
                 print("Movie: \(movie)")

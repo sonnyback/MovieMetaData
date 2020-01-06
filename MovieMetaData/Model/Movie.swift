@@ -8,18 +8,27 @@
 
 import Foundation
 
+/*
+ * Struct for representing a Movie object based on the JSON data returned
+ * from themoviedb.org api.
+ * Following links were helpful in figuring out how to match the object structure
+ * to the JSON data -
+ * https://stackoverflow.com/questions/47769118/xmlelement-with-tags-in-between-string
+ * https://stackoverflow.com/questions/55562253/swift-4-decodable-no-value-associated-with-key-codingkeys
+ */
 struct Movie: Codable {
     
     //var imdbID = ""
-    var id: Int
+    var id: Int // id assigned by themoviedb.org's api
     var title: String
-    var overview: String
+    var overview: String // overview/description of the movie
     var genreIds: [Int] // array of ints - each genre is represented with an int
     var genre = "" // concatenated String version of the genres
     var releaseDate: String
-    var posterPath: String
-//    let rating = ""
+    var posterPath: String // path to the movie's cover/poster image
+    //let rating = "" // movie's rating...not currently returned by the api
     
+    // needed for parsing the JSON with snakecase values
     private enum CodingKeys: String, CodingKey {
         //case results = "movie_results"
         case genreIds = "genre_ids"
@@ -29,6 +38,7 @@ struct Movie: Codable {
         case title, overview
     }
     
+    // Enum for all movie genres
     private enum Genres: String {
         case adventure = "Adventure"
         case fantasy = "Fantasy"
@@ -51,6 +61,12 @@ struct Movie: Codable {
         case tv = "TV Movie"
     }
     
+    /*
+     * Method that takes the array of genreIds ([Int]) and converts
+     * them into a single String with a separator.
+     * @param genreIds: [Int]
+     * @return genreString: String
+     */
     func getGenreStringFrom(array: [Int]) -> String {
         //print("Entered getGenreStringFrom(array: \(array)...")
         
@@ -74,6 +90,12 @@ struct Movie: Codable {
         return genreString
     }
     
+    /*
+     * Method that takes the genre id (Int) and returns the String
+     * representation from the Genres Enum
+     * @param genreId: Int
+     * @return Genre: String
+     */
     private func convertIntToString(for genreId: Int) -> String {
         
         switch genreId {
