@@ -35,15 +35,16 @@ class ViewController: NSViewController {
 
     @IBAction private func okButtonClicked(_ sender: NSButton) {
         print("Entered okButtonClicked()...")
-        
+        // get the imdb id from the user input...this drives everything
         let movieId = imdbIdInputField.stringValue
-        //var movie: Movie
         
+        // TODO: change this to a guard let
         if movieId.isEmpty {
             print("Opps! You didn't enter an IMDB ID!")
             textDisplayField.stringValue = "Opps! You didn't enter an IMDB ID! Try again..."
         } else {
             textDisplayField.stringValue = "IMDB id: \(movieId)"
+            // TODO: call this on a background thread
             // retrieve the JSON data from the api and set the movie object
             if var movie = movieDBManager.fetchJSON(for: movieId) {
                 // get the string respresentation of the genres(Ints)
@@ -68,6 +69,7 @@ class ViewController: NSViewController {
             imdbIdInputField.stringValue = ""
         }
         textDisplayField.stringValue = ""
+        imageView.image = nil
     }
     
     private func retrieveImageFrom(path: URL) -> NSImage? {

@@ -26,13 +26,17 @@ struct XMLWriter {
     static let descriptionTag = "DESCRIPTION"
     static let ratingTag = "RATING"
     
+    // for file writing
+    static let outputDirectory = "/Users/Sonny/Documents/Movie Metadata/"
+    static let xmlFileExtension = ".xml"
+    static let jpgFileExtension = ".jpg"
+    
     static func writeXMLOutputFor(movie: Movie) {
         print("Entered XMLWriter.writeXMLOutputFor: \(movie.title)")
         
-        /* static tags that are reused through the xml */
-//        let simpleElement = XMLElement(name: simpleTag)
-//        var nameElement = XMLElement(name: nameTag)
-//        var stringElement = XMLElement(name: stringTag)
+        /*
+         * BEGIN XML FILE BUILDING.....................................
+         */
         
         // root element
         let rootElement = XMLElement(name: tags)
@@ -62,12 +66,6 @@ struct XMLWriter {
         simpleElementTitle.addChild(stringElementTitle)
         tagElement.addChild(simpleElementTitle)
         
-//        nameElement.stringValue = title
-//        stringElement.stringValue = movieTitle
-//        simpleElement.addChild(nameElement)
-//        simpleElement.addChild(stringElement)
-//        tagElement.addChild(simpleElement)
-        
         // Release Date
         let movieReleaseDate = !movie.releaseDate.isEmpty ? movie.releaseDate : ""
         let simpleElementReleaseDate = XMLElement(name: simpleTag)
@@ -96,7 +94,33 @@ struct XMLWriter {
         simpleElementDescription.addChild(stringElementDescription)
         tagElement.addChild(simpleElementDescription)
         
+        /*
+         * END XML FILE BUILDING................................
+         */
+        
+        /*
+         * File output....
+         */
+        let outputURL = URL(fileURLWithPath: outputDirectory)
+        let outputDir = FileManager.default.displayName(atPath: outputURL.path)
+        print("Output dir: \(outputDir)")
+
+        let fileName = outputURL.appendingPathComponent(movie.title + xmlFileExtension)
+        
+        let xmlString = xml.xmlString
+        print("XML String: \(xmlString)")
+        
+        do {
+            try xmlString.write(to: fileName, atomically: true, encoding: .utf8)
+        } catch let error {
+            print("Error writing file - \(error)")
+        }
         
         print("XML: \(xml.xmlString)")
+    }
+    
+    private static func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
     }
 }

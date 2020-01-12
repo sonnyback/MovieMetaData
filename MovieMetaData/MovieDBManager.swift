@@ -16,7 +16,6 @@ struct MovieDBManager {
     let imageFetchURL = "https://image.tmdb.org/t/p/original" // url for fetching movie images
     let apiKeyString = "?api_key="
     let languageSource = "&language=en-US&external_source=imdb_id"
-    //var movie: Movie?
     
 //    init(movie: Movie) {
 //        //self.imdbMovieId = imdbMovieId
