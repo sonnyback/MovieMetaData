@@ -27,12 +27,12 @@ struct XMLWriter {
     static let ratingTag = "RATING"
     
     // for file writing
-    static let outputDirectory = "/Users/Sonny/Documents/Movie Metadata/"
+    //static let outputDirectory = "/Users/Sonny/Documents/Movie Metadata/"
     static let xmlFileExtension = ".xml"
     static let jpgFileExtension = ".jpg"
     
-    static func writeXMLOutputFor(movie: Movie) {
-        print("Entered XMLWriter.writeXMLOutputFor: \(movie.title)")
+    static func writeXMLOutputFor(movie: Movie, to: String) {
+        print("Entered XMLWriter.writeXMLOutputFor: \(movie.title), to: \(to)")
         
         /*
          * BEGIN XML FILE BUILDING.....................................
@@ -101,7 +101,7 @@ struct XMLWriter {
         /*
          * File output....
          */
-        let outputURL = URL(fileURLWithPath: outputDirectory)
+        let outputURL = URL(fileURLWithPath: to) // URL to write the file
         let outputDir = FileManager.default.displayName(atPath: outputURL.path)
         print("Output dir: \(outputDir)")
 
@@ -119,8 +119,8 @@ struct XMLWriter {
         print("XML: \(xml.xmlString)")
     }
     
-    private static func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
-    }
+//    private static func getDocumentsDirectory() -> URL {
+//        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+//        return paths[0]
+//    }
 }
