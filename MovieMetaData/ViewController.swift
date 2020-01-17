@@ -51,36 +51,9 @@ class ViewController: NSViewController {
             textDisplayField.stringValue = "Opps! You didn't enter an IMDB ID! Try again..."
         } else {
             textDisplayField.stringValue = "IMDB id: \(movieId)" // show the imdb id in the text view
-            // make sure there is a path to save the XML file to disk
-            if let saveToPath = saveFolderPath {
-                // TODO: call this on a background thread
-                // retrieve the JSON data from the api and set the movie object
-                if var movie = movieDBManager.fetchJSON(for: movieId) {
-                    // get the string respresentation of the genres(Ints)
-                    movie.genre = movie.getGenreStringFrom(array: movie.genreIds)
-                    // retrieve the movie's poster image
-                    if let image = retrieveImageFrom(path: URL(string: movieDBManager.imageFetchURL + movie.posterPath)!) {
-                        print("We got the image!!!")
-                        imageView.image = image
-                        
-                        /******* Write the image file to the disk! *******/
-                        if save(posterImage: image, to: saveToPath, for: movie.title) {
-                            textDisplayField.stringValue += "\n\(movie.title).jpg written successfully!"
-                        }
-                    }
-                    textDisplayField.stringValue += "\n\nTitle: \(movie.title)\n\nRelease Date: \(movie.releaseDate)\n\nGenre: \(movie.genre)\n\nOverview: \(movie.overview)\n"
-                    print("Writing file to: \(saveToPath)")
-                    
-                    /******* Write the XML file to the disk! *******/
-                    if XMLWriter.writeXMLOutputFor(movie: movie, to: saveToPath) {
-                        textDisplayField.stringValue += "\n\(movie.title).xml written successfully!"
-                    }
-                } else {
-                    print("Error: nil was returned instead of a Movie")
-                    textDisplayField.stringValue = "Error! Wanted a movie but got nil! 😤🤬"
-                }
-            } else {
-                print("Yikes! No save path!")
+            //processRequest(for: movieId)
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                self?.processRequest(for: movieId)
             }
         }
     }
@@ -123,11 +96,78 @@ class ViewController: NSViewController {
     }
     
     /*
+     * Method that handles the request after the OK button is pressed.
+     * It's responsible for making the call to fetch and parse the JSON,
+     * update the display text, and make the calls to write the XML and JPG
+     * files to the local save directory.
+     * @param imdbId: String
+     */
+    private func processRequest(for imdbId: String) {
+        print("Entered processRequest(for: \(imdbId)")
+        // make sure there is a path to save the XML file to disk
+        if let saveToPath = saveFolderPath {
+            
+            // retrieve the JSON data from the api and set the movie object
+            if var movie = movieDBManager.fetchJSON(for: imdbId) {
+                // get the string respresentation of the genres(Ints)
+                movie.genre = movie.getGenreStringFrom(array: movie.genreIds)
+                
+                DispatchQueue.main.async {
+                    self.textDisplayField.stringValue += "\n\nTitle: \(movie.title)\n\nRelease Date: \(movie.releaseDate)\n\nGenre: \(movie.genre)\n\nOverview: \(movie.overview)\n"
+                }
+                
+                print("Writing file to: \(saveToPath)")
+                
+                /******* Write the XML file to the disk! *******/
+                DispatchQueue.main.async {
+                    if XMLWriter.writeXMLOutputFor(movie: movie, to: saveToPath) {
+                        self.textDisplayField.stringValue += "\n\(saveToPath)/\(movie.title).xml written successfully!"
+                    } else {
+                        self.textDisplayField.stringValue += "Dang! Error trying to save the XML file to the disk."
+                    }
+                }
+                
+                // retrieve the movie's poster image
+                if let image = retrieveImageFrom(path: URL(string: movieDBManager.imageFetchURL + movie.posterPath)!) {
+                    print("We got the image!!!")
+                    DispatchQueue.main.async { [weak self] in
+                        self?.imageView.image = image
+                    }
+                    
+                    /******* Write the image file to the disk! *******/
+                    if save(posterImage: image, to: saveToPath, for: movie.title) {
+                        DispatchQueue.main.async {
+                            self.textDisplayField.stringValue += "\n\(saveToPath)/\(movie.title).jpg written successfully!"
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            self.textDisplayField.stringValue += "Dang! Error trying to save the image file to the disk."
+                        }
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.textDisplayField.stringValue += "Opps! Error trying to retrieve the image file!"
+                    }
+                    print("Error retrieving image file!")
+                }
+            } else {
+                print("Error: nil was returned instead of a Movie")
+                DispatchQueue.main.async {
+                    self.textDisplayField.stringValue = "Error! Wanted a movie but got nil! 😤🤬"
+                }
+            }
+        } else {
+            print("Yikes! No save path!")
+        }
+    }
+    
+    /*
      * Method that retrieves the image from the URL
      * @param path: URL
      * @return NSImage?
      */
     private func retrieveImageFrom(path: URL) -> NSImage? {
+        print("Retrieving image from: \(path)")
         return NSImage(contentsOf: path) ?? nil
     }
     

@@ -25,11 +25,7 @@ struct XMLWriter {
     static let genreTag = "GENRE"
     static let descriptionTag = "DESCRIPTION"
     static let ratingTag = "RATING"
-    
-    // for file writing
-    //static let outputDirectory = "/Users/Sonny/Documents/Movie Metadata/"
-    static let xmlFileExtension = ".xml"
-    static let jpgFileExtension = ".jpg"
+    static let xmlFileExtension = ".xml" // xml file extension 
     
     static func writeXMLOutputFor(movie: Movie, to: String) -> Bool {
         print("Entered XMLWriter.writeXMLOutputFor: \(movie.title), to: \(to)")
@@ -103,8 +99,6 @@ struct XMLWriter {
          * File output....
          */
         let outputURL = URL(fileURLWithPath: to) // URL to write the file
-        //let outputDir = FileManager.default.displayName(atPath: outputURL.path)
-        //print("Output dir: \(outputDir)")
 
         let fileName = outputURL.appendingPathComponent(movie.title + xmlFileExtension)
         
