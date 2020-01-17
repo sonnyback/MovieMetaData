@@ -2,8 +2,8 @@
 //  Movie.swift
 //  MovieMetaData
 //
-//  Created by Sonny Back on 12/24/19.
-//  Copyright © 2019 Sonny Back. All rights reserved.
+//  Created by SB on 12/24/19.
+//  Copyright © 2019 SB. All rights reserved.
 //
 
 import Foundation

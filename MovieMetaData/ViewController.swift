@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  MovieMetaData
 //
-//  Created by Sonny Back on 12/20/19.
-//  Copyright © 2019 Sonny Back. All rights reserved.
+//  Created by SB on 12/20/19.
+//  Copyright © 2019 SB. All rights reserved.
 //
 
 import Cocoa
@@ -64,13 +64,17 @@ class ViewController: NSViewController {
                         imageView.image = image
                         
                         /******* Write the image file to the disk! *******/
-                        save(posterImage: image, to: saveToPath, for: movie.title)
+                        if save(posterImage: image, to: saveToPath, for: movie.title) {
+                            textDisplayField.stringValue += "\n\(movie.title).jpg written successfully!"
+                        }
                     }
                     textDisplayField.stringValue += "\n\nTitle: \(movie.title)\n\nRelease Date: \(movie.releaseDate)\n\nGenre: \(movie.genre)\n\nOverview: \(movie.overview)\n"
                     print("Writing file to: \(saveToPath)")
                     
                     /******* Write the XML file to the disk! *******/
-                    XMLWriter.writeXMLOutputFor(movie: movie, to: saveToPath)
+                    if XMLWriter.writeXMLOutputFor(movie: movie, to: saveToPath) {
+                        textDisplayField.stringValue += "\n\(movie.title).xml written successfully!"
+                    }
                 } else {
                     print("Error: nil was returned instead of a Movie")
                     textDisplayField.stringValue = "Error! Wanted a movie but got nil! 😤🤬"
@@ -91,6 +95,12 @@ class ViewController: NSViewController {
         okButton.isEnabled = false // deactivate until user selects save path again
     }
     
+    /*
+     * Method that handles getting the local path for saving the XML
+     * file and image file. This must set in order to get the movie
+     * details.
+     * @param sender: NSButton
+     */
     @IBAction func saveButtonClicked(_ sender: NSButton) {
         print("Entered saveButtonClicked()...")
         let openPanel = NSOpenPanel()
@@ -127,8 +137,9 @@ class ViewController: NSViewController {
      * @param directory: String - directory to save the image to
      * @param title: String -
      */
-    private func save(posterImage: NSImage, to directory: String, for title: String) {
+    private func save(posterImage: NSImage, to directory: String, for title: String) -> Bool {
         print("Entered save(posterImage, to directory: \(directory)")
+        var success = true // success/fail indicator
         let jpgFileExtension = ".jpg" // image file extension
         let outputURL = URL(fileURLWithPath: directory)
         let fileName = outputURL.appendingPathComponent(title+jpgFileExtension) // change this to a guard let
@@ -142,6 +153,8 @@ class ViewController: NSViewController {
             try jpgData?.write(to: fileName)
         } catch let error {
             print("Error saving image - \(error)")
+            success = false
         }
+        return success
     }
 }

@@ -2,8 +2,8 @@
 //  XMLWriter.swift
 //  MovieMetaData
 //
-//  Created by Sonny Back on 1/3/20.
-//  Copyright © 2020 Sonny Back. All rights reserved.
+//  Created by SB on 1/3/20.
+//  Copyright © 2020 SB. All rights reserved.
 //
 
 import Foundation
@@ -31,9 +31,10 @@ struct XMLWriter {
     static let xmlFileExtension = ".xml"
     static let jpgFileExtension = ".jpg"
     
-    static func writeXMLOutputFor(movie: Movie, to: String) {
+    static func writeXMLOutputFor(movie: Movie, to: String) -> Bool {
         print("Entered XMLWriter.writeXMLOutputFor: \(movie.title), to: \(to)")
         
+        var successIndicator = true // success/fail indicator
         /*
          * BEGIN XML FILE BUILDING.....................................
          */
@@ -102,8 +103,8 @@ struct XMLWriter {
          * File output....
          */
         let outputURL = URL(fileURLWithPath: to) // URL to write the file
-        let outputDir = FileManager.default.displayName(atPath: outputURL.path)
-        print("Output dir: \(outputDir)")
+        //let outputDir = FileManager.default.displayName(atPath: outputURL.path)
+        //print("Output dir: \(outputDir)")
 
         let fileName = outputURL.appendingPathComponent(movie.title + xmlFileExtension)
         
@@ -114,9 +115,11 @@ struct XMLWriter {
             try xmlString.write(to: fileName, atomically: true, encoding: .utf8)
         } catch let error {
             print("Error writing file - \(error)")
+            successIndicator = false
         }
         
         print("XML: \(xml.xmlString)")
+        return successIndicator
     }
     
 //    private static func getDocumentsDirectory() -> URL {

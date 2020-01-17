@@ -3,7 +3,7 @@
 //  MovieMetaData
 //
 //  Created by Sonny Back on 12/20/19.
-//  Copyright © 2019 Sonny Back. All rights reserved.
+//  Copyright © 2019 SB. All rights reserved.
 //
 
 import Foundation
