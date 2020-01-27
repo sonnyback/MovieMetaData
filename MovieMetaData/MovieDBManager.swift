@@ -72,6 +72,12 @@ struct MovieDBManager {
 //        task.resume()
 //    }
     
+    /*
+     * Method that fetches the JSON data from the URL for the IMDB ID,
+     * then calls the method to parse the JSON data.
+     * @param imdbId: String
+     * @return Movie? - if successful, will return a Movie?, else nil
+     */
     mutating func fetchJSON(for imdbId: String) -> Movie? {
         
         // url for the petition data in json
@@ -81,6 +87,7 @@ struct MovieDBManager {
         if let url = URL(string: urlString) {
             if let data = try? Data(contentsOf: url) {
                 print("JSON data successfully retrieved!")
+                //print(String(data: data, encoding: .utf8))
                 return parse(json: data)
             }
         }
@@ -93,9 +100,9 @@ struct MovieDBManager {
         let decoder = JSONDecoder()
         var movies: [Movie]
         
-        // parse the json data into the Petitions struct object
+        // parse the json data into the Movie struct object
         if let jsonData = try? decoder.decode(Root.self, from: json) {
-            movies = jsonData.results
+            movies = jsonData.movieResults
             print("JSON parsing successful! Returned: \(movies.count) movie result!")
             //self.movie = movies.first ?? nil
             if let movie = movies.first {

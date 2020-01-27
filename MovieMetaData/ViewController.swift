@@ -32,6 +32,7 @@ class ViewController: NSViewController {
 
         print("Entered viewDidLoad...")
         okButton.isEnabled = false // disabled until user selects save path
+        imageView.image = NSImage(named: "search-50")
     }
 
     override var representedObject: Any? {
@@ -51,20 +52,23 @@ class ViewController: NSViewController {
             textDisplayField.stringValue = "Opps! You didn't enter an IMDB ID! Try again..."
         } else {
             textDisplayField.stringValue = "IMDB id: \(movieId)" // show the imdb id in the text view
-            //processRequest(for: movieId)
+            // process the request on a background thread
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 self?.processRequest(for: movieId)
             }
         }
     }
     
+    /*
+     * Method that handles clearing the text field
+     */
     @IBAction func clearButtonClicked(_ sender: NSButton) {
         print("Entered clearButtonClicked()...")
         if !imdbIdInputField.stringValue.isEmpty {
             imdbIdInputField.stringValue = ""
         }
         textDisplayField.stringValue = ""
-        imageView.image = nil
+        imageView.image = NSImage(named: "search-50")
         okButton.isEnabled = false // deactivate until user selects save path again
     }
     
@@ -130,6 +134,7 @@ class ViewController: NSViewController {
                 // retrieve the movie's poster image
                 if let image = retrieveImageFrom(path: URL(string: movieDBManager.imageFetchURL + movie.posterPath)!) {
                     print("We got the image!!!")
+                    
                     DispatchQueue.main.async { [weak self] in
                         self?.imageView.image = image
                     }

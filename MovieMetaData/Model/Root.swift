@@ -9,9 +9,11 @@
 import Foundation
 
 struct Root: Codable {
-    let results: [Movie]
+    let movieResults: [Movie]
+    let episodeResults: [Episode]
     
     enum CodingKeys: String, CodingKey {
-        case results = "movie_results"
+        case movieResults = "movie_results"
+        case episodeResults = "tv_episode_results"
     }
 }

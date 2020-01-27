@@ -103,7 +103,7 @@ struct XMLWriter {
         let fileName = outputURL.appendingPathComponent(movie.title + xmlFileExtension)
         
         let xmlString = xml.xmlString
-        print("XML String: \(xmlString)")
+        //print("XML String: \(xmlString)")
         
         do {
             try xmlString.write(to: fileName, atomically: true, encoding: .utf8)
