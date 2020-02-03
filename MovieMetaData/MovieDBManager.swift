@@ -95,6 +95,27 @@ struct MovieDBManager {
         return nil
     }
     
+    mutating func fetchEpisodeJSON(for imdbId: String) -> Episode? {
+        
+        // url for the petition data in json
+        let urlString = createURL(for: imdbId)
+        
+        // create the url from the urlString and try to fetch the data
+        if let url = URL(string: urlString) {
+            if let data = try? Data(contentsOf: url) {
+                print("JSON data successfully retrieved!")
+                //print(String(data: data, encoding: .utf8))
+                return parseEpisode(json: data)
+            }
+        }
+        // if we make it here, there was an error so return nil
+        return nil
+    }
+    
+    /*
+     * Method to parse the JSON into the struct object
+     * 
+     */
     private mutating func parse(json: Data) -> Movie? {
         print("Entered parse(json)...")
         let decoder = JSONDecoder()
@@ -112,6 +133,27 @@ struct MovieDBManager {
         } else {
             print("Error parsing the JSON!")
         }
+        // if we get here something went wrong so return nil
+        return nil
+    }
+    
+    private mutating func parseEpisode(json: Data) -> Episode? {
+        print("Entered parseEpisode(json)...")
+        let decoder = JSONDecoder()
+        var episodes: [Episode]
+        
+    
+        // parse the json data into the Movie struct object
+        if let jsonData = try? decoder.decode(Root.self, from: json) {
+            episodes = jsonData.episodeResults
+            print("JSON parsing successful! Returned: \(episodes.count) episdoe result!")
+            //self.movie = movies.first ?? nil
+            if let episode = episodes.first {
+                print("Episode: \(episode)")
+                return episode
+            }
+        }
+        
         // if we get here something went wrong so return nil
         return nil
     }

@@ -18,8 +18,8 @@ struct Episode: Codable {
     var id: Int // id assigned by themoviedb.org's api
     var name: String
     var overview: String // episode description/overview
-    var episodeNumber: String
-    var seasonNumber: String
+    var episodeNumber: Int
+    var seasonNumber: Int
     var airDate: String
     
     // needed for parsing the JSON with snakecase values

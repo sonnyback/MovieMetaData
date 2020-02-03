@@ -14,8 +14,10 @@ class ViewController: NSViewController {
     @IBOutlet var imdbIdInputField: NSTextField!
     @IBOutlet var textDisplayField: NSTextField! // displays text output of activity
     @IBOutlet var imageView: NSImageView! // for displaying movie image
+    @IBOutlet var movieOrEpisodeSelector: NSPopUpButton! // used to select between movie or tv episode
     lazy var movieDBManager = MovieDBManager()
     lazy var image: NSImage? = NSImage()
+    var movieOrEpisode = " "
     var saveFolderPath: String? { // path of where to save the XML file
         didSet {
             okButton.isEnabled = true // activate ok button once we have a save path
@@ -32,7 +34,8 @@ class ViewController: NSViewController {
 
         print("Entered viewDidLoad...")
         okButton.isEnabled = false // disabled until user selects save path
-        imageView.image = NSImage(named: "search-50")
+        imageView.image = NSImage(named: "search-50") // sets the default image background
+        setupPopUpSelector() // sets up the movie/episode selector
     }
 
     override var representedObject: Any? {
@@ -52,6 +55,7 @@ class ViewController: NSViewController {
             textDisplayField.stringValue = "Opps! You didn't enter an IMDB ID! Try again..."
         } else {
             textDisplayField.stringValue = "IMDB id: \(movieId)" // show the imdb id in the text view
+            movieOrEpisode = movieOrEpisodeSelector.selectedItem?.title ?? "Movie"
             // process the request on a background thread
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 self?.processRequest(for: movieId)
@@ -70,6 +74,7 @@ class ViewController: NSViewController {
         textDisplayField.stringValue = ""
         imageView.image = NSImage(named: "search-50")
         okButton.isEnabled = false // deactivate until user selects save path again
+        setupPopUpSelector()
     }
     
     /*
@@ -100,6 +105,17 @@ class ViewController: NSViewController {
     }
     
     /*
+     * Method responsible for setting up the NSPopUpButton for
+     * selecting Movie or Episode - default is Movie.
+     */
+    private func setupPopUpSelector() {
+        let popUpButtonTitles = ["Movie", "Episode"]
+        movieOrEpisodeSelector.removeAllItems() // clear default values first
+        movieOrEpisodeSelector.addItems(withTitles: popUpButtonTitles) // add our values
+        movieOrEpisodeSelector.select(movieOrEpisodeSelector.item(at: 0))
+    }
+    
+    /*
      * Method that handles the request after the OK button is pressed.
      * It's responsible for making the call to fetch and parse the JSON,
      * update the display text, and make the calls to write the XML and JPG
@@ -107,59 +123,72 @@ class ViewController: NSViewController {
      * @param imdbId: String
      */
     private func processRequest(for imdbId: String) {
-        print("Entered processRequest(for: \(imdbId)")
+        print("Entered processRequest(for: \(imdbId))")
+        
         // make sure there is a path to save the XML file to disk
         if let saveToPath = saveFolderPath {
             
-            // retrieve the JSON data from the api and set the movie object
-            if var movie = movieDBManager.fetchJSON(for: imdbId) {
-                // get the string respresentation of the genres(Ints)
-                movie.genre = movie.getGenreStringFrom(array: movie.genreIds)
+            if movieOrEpisode == MediaType.movie.rawValue {
+                //TODO: make separate methods for movie and episode processing....
                 
-                DispatchQueue.main.async {
-                    self.textDisplayField.stringValue += "\n\nTitle: \(movie.title)\n\nRelease Date: \(movie.releaseDate)\n\nGenre: \(movie.genre)\n\nOverview: \(movie.overview)\n"
-                }
-                
-                print("Writing file to: \(saveToPath)")
-                
-                /******* Write the XML file to the disk! *******/
-                DispatchQueue.main.async {
-                    if XMLWriter.writeXMLOutputFor(movie: movie, to: saveToPath) {
-                        self.textDisplayField.stringValue += "\n\(saveToPath)/\(movie.title).xml written successfully!"
-                    } else {
-                        self.textDisplayField.stringValue += "Dang! Error trying to save the XML file to the disk."
-                    }
-                }
-                
-                // retrieve the movie's poster image
-                if let image = retrieveImageFrom(path: URL(string: movieDBManager.imageFetchURL + movie.posterPath)!) {
-                    print("We got the image!!!")
+                // retrieve the JSON data from the api and set the movie object
+                if var movie = movieDBManager.fetchJSON(for: imdbId) {
+                    // get the string respresentation of the genres(Ints)
+                    movie.genre = movie.getGenreStringFrom(array: movie.genreIds)
                     
-                    DispatchQueue.main.async { [weak self] in
-                        self?.imageView.image = image
+                    DispatchQueue.main.async {
+                        self.textDisplayField.stringValue += "\n\nTitle: \(movie.title)\n\nRelease Date: \(movie.releaseDate)\n\nGenre: \(movie.genre)\n\nOverview: \(movie.overview)\n"
                     }
                     
-                    /******* Write the image file to the disk! *******/
-                    if save(posterImage: image, to: saveToPath, for: movie.title) {
-                        DispatchQueue.main.async {
-                            self.textDisplayField.stringValue += "\n\(saveToPath)/\(movie.title).jpg written successfully!"
+                    print("Writing file to: \(saveToPath)")
+                    
+                    /******* Write the XML file to the disk! *******/
+                    DispatchQueue.main.async {
+                        if XMLWriter.writeXMLOutputFor(movie: movie, to: saveToPath) {
+                            self.textDisplayField.stringValue += "\n\(saveToPath)/\(movie.title).xml written successfully!"
+                        } else {
+                            self.textDisplayField.stringValue += "Dang! Error trying to save the XML file to the disk."
+                        }
+                    }
+                    
+                    // retrieve the movie's poster image
+                    if let image = retrieveImageFrom(path: URL(string: movieDBManager.imageFetchURL + movie.posterPath)!) {
+                        print("We got the image!!!")
+                        
+                        DispatchQueue.main.async { [weak self] in
+                            self?.imageView.image = image
+                        }
+                        
+                        /******* Write the image file to the disk! *******/
+                        if save(posterImage: image, to: saveToPath, for: movie.title) {
+                            DispatchQueue.main.async {
+                                self.textDisplayField.stringValue += "\n\(saveToPath)/\(movie.title).jpg written successfully!"
+                            }
+                        } else {
+                            DispatchQueue.main.async {
+                                self.textDisplayField.stringValue += "Dang! Error trying to save the image file to the disk."
+                            }
                         }
                     } else {
                         DispatchQueue.main.async {
-                            self.textDisplayField.stringValue += "Dang! Error trying to save the image file to the disk."
+                            self.textDisplayField.stringValue += "Opps! Error trying to retrieve the image file!"
                         }
+                        print("Error retrieving image file!")
                     }
                 } else {
+                    print("Error: nil was returned instead of a Movie")
                     DispatchQueue.main.async {
-                        self.textDisplayField.stringValue += "Opps! Error trying to retrieve the image file!"
+                        self.textDisplayField.stringValue = "Error! Wanted a movie but got nil! 😤🤬"
                     }
-                    print("Error retrieving image file!")
                 }
-            } else {
-                print("Error: nil was returned instead of a Movie")
-                DispatchQueue.main.async {
-                    self.textDisplayField.stringValue = "Error! Wanted a movie but got nil! 😤🤬"
+            } else if movieOrEpisode == MediaType.episode.rawValue {
+                
+                if let episode = movieDBManager.fetchEpisodeJSON(for: imdbId) {
+                    if XMLWriter.writeXMLOutputFor(episode: episode, to: saveToPath) {
+                        print("Episode \(episode.name) written successfully!")
+                    }
                 }
+                
             }
         } else {
             print("Yikes! No save path!")
@@ -201,5 +230,20 @@ class ViewController: NSViewController {
             success = false
         }
         return success
+    }
+    
+    private func updateDisplayText(with text: String, clearExisting: Bool) {
+        
+        if clearExisting {
+            textDisplayField.stringValue = text
+        } else {
+            textDisplayField.stringValue += "\n" + text
+        }
+    }
+    
+    private enum MediaType: String {
+        
+        case movie = "Movie"
+        case episode = "Episode"
     }
 }

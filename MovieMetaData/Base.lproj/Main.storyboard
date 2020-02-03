@@ -769,12 +769,28 @@ DQ
                                     <action selector="saveButtonClicked:" target="XfG-lQ-9wD" id="RAc-h8-qLu"/>
                                 </connections>
                             </button>
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gfh-tH-XZf">
+                                <rect key="frame" x="695" y="556" width="88" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="3GC-nN-py0" id="GXQ-1U-vUv">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <menu key="menu" id="qic-lk-oYf">
+                                        <items>
+                                            <menuItem state="on" id="3GC-nN-py0"/>
+                                            <menuItem title="Item 2" id="NDR-s9-YKE"/>
+                                            <menuItem title="Item 3" id="wDe-M8-Wpo"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                            </popUpButton>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="clearButton" destination="06F-3g-wja" id="0lt-gz-GvX"/>
                         <outlet property="imageView" destination="O0R-nl-dkR" id="aNi-Yx-d2d"/>
                         <outlet property="imdbIdInputField" destination="vzb-s4-AWG" id="xO4-8j-wFQ"/>
+                        <outlet property="movieOrEpisodeSelector" destination="gfh-tH-XZf" id="fSo-Ck-zXl"/>
                         <outlet property="okButton" destination="JhH-VG-II1" id="jAv-iV-VOl"/>
                         <outlet property="textDisplayField" destination="Y8b-Ca-jEB" id="6R4-RH-bak"/>
                     </connections>

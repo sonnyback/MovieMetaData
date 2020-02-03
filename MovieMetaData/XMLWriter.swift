@@ -116,8 +116,78 @@ struct XMLWriter {
         return successIndicator
     }
     
-//    private static func getDocumentsDirectory() -> URL {
-//        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-//        return paths[0]
-//    }
+    static func writeXMLOutputFor(episode: Episode, to: String) -> Bool {
+        print("Entered XMLWriter.writeXMLOutputFor: \(episode.name), to: \(to)")
+        
+        var successIndicator = true // success/fail indicator
+        
+        /*
+         * BEGIN XML FILE BUILDING.....................................
+         */
+        
+        // root element
+        let rootElement = XMLElement(name: tags)
+        let xml = XMLDocument(rootElement: rootElement)
+        xml.characterEncoding = "UTF-8"
+        
+        // sub root element
+        let tagElement = XMLElement(name: tag)
+        rootElement.addChild(tagElement)
+        
+        // targets element
+        let targetsElement = XMLElement(name: targets)
+        let targetsTypeValueElement = XMLElement(name: targetTypeValue, stringValue: fifty)
+        //rootElement.addChild(targetsElement)
+        //targetsElement.addChild(targetsTypeValueElement)
+        targetsElement.addChild(targetsTypeValueElement)
+        tagElement.addChild(targetsElement)
+        
+        // Episode Name
+        let episodeName = !episode.name.isEmpty ? episode.name : ""
+        let simpleElementTitle = XMLElement(name: simpleTag)
+        let nameElementTitle = XMLElement(name: nameTag, stringValue: title)
+        let stringElementTitle = XMLElement(name: stringTag, stringValue: episodeName)
+        simpleElementTitle.addChild(nameElementTitle)
+        simpleElementTitle.addChild(stringElementTitle)
+        tagElement.addChild(simpleElementTitle)
+        
+        // Release Date
+        let episodeAirDate = !episode.airDate.isEmpty ? episode.airDate : ""
+        let simpleElementReleaseDate = XMLElement(name: simpleTag)
+        let nameElementReleaseDate = XMLElement(name: nameTag, stringValue: dateReleasedTag)
+        let stringElementReleaseDate = XMLElement(name: stringTag, stringValue: episodeAirDate)
+        simpleElementReleaseDate.addChild(nameElementReleaseDate)
+        simpleElementReleaseDate.addChild(stringElementReleaseDate)
+        tagElement.addChild(simpleElementReleaseDate)
+        
+        // Description (Overview)
+        let description = !episode.overview.isEmpty ? episode.overview : ""
+        let simpleElementDescription = XMLElement(name: simpleTag)
+        let nameElementDescription = XMLElement(name: nameTag, stringValue: descriptionTag)
+        let stringElementDescription = XMLElement(name: stringTag, stringValue: description)
+        simpleElementDescription.addChild(nameElementDescription)
+        simpleElementDescription.addChild(stringElementDescription)
+        tagElement.addChild(simpleElementDescription)
+        
+        /*
+         * File output....
+         */
+        let outputURL = URL(fileURLWithPath: to) // URL to write the file
+
+        let fileName = outputURL.appendingPathComponent(episode.name + xmlFileExtension)
+        
+        let xmlString = xml.xmlString
+        //print("XML String: \(xmlString)")
+        
+        do {
+            try xmlString.write(to: fileName, atomically: true, encoding: .utf8)
+        } catch let error {
+            print("Error writing file - \(error)")
+            successIndicator = false
+        }
+        
+        print("XML: \(xml.xmlString)")
+        
+        return successIndicator
+    }
 }
