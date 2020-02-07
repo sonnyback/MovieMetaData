@@ -721,7 +721,7 @@ DQ
 </string>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="okButtonClicked:" target="XfG-lQ-9wD" id="M6n-p6-zf8"/>
+                                    <action selector="submitButtonClicked:" target="XfG-lQ-9wD" id="M6n-p6-zf8"/>
                                 </connections>
                             </button>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vzb-s4-AWG">

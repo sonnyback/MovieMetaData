@@ -24,9 +24,6 @@ class ViewController: NSViewController {
             //print("Saving file to: \(self.saveFolderPath!)")
         }
     }
-    var imdbMovieID: String {
-        return imdbIdInputField.stringValue
-    }
     @IBOutlet var clearButton: NSButton!
     
     override func viewDidLoad() {
@@ -44,7 +41,7 @@ class ViewController: NSViewController {
         }
     }
 
-    @IBAction private func okButtonClicked(_ sender: NSButton) {
+    @IBAction private func submitButtonClicked(_ sender: NSButton) {
         print("Entered okButtonClicked()...")
         // get the imdb id from the user input...this drives everything
         let movieId = imdbIdInputField.stringValue
