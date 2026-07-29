@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24765" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24765"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -748,7 +749,7 @@ DQ
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="fMo-dQ-DdC"/>
                             </imageView>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="06F-3g-wja">
-                                <rect key="frame" x="251" y="552" width="72" height="32"/>
+                                <rect key="frame" x="242" y="552" width="72" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Clear" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PuT-dd-YYx">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -758,23 +759,12 @@ DQ
                                     <action selector="clearButtonClicked:" target="XfG-lQ-9wD" id="h4v-PI-Tr4"/>
                                 </connections>
                             </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1aW-kc-j7i">
-                                <rect key="frame" x="323" y="552" width="81" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Save..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bBV-So-0m7">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="saveButtonClicked:" target="XfG-lQ-9wD" id="RAc-h8-qLu"/>
-                                </connections>
-                            </button>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gfh-tH-XZf">
                                 <rect key="frame" x="695" y="556" width="88" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="3GC-nN-py0" id="GXQ-1U-vUv">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
+                                    <font key="font" metaFont="message"/>
                                     <menu key="menu" id="qic-lk-oYf">
                                         <items>
                                             <menuItem state="on" id="3GC-nN-py0"/>
@@ -784,6 +774,17 @@ DQ
                                     </menu>
                                 </popUpButtonCell>
                             </popUpButton>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1aW-kc-j7i">
+                                <rect key="frame" x="301" y="552" width="81" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Save..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bBV-So-0m7">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="saveButtonClicked:" target="XfG-lQ-9wD" id="RAc-h8-qLu"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
@@ -791,7 +792,7 @@ DQ
                         <outlet property="imageView" destination="O0R-nl-dkR" id="aNi-Yx-d2d"/>
                         <outlet property="imdbIdInputField" destination="vzb-s4-AWG" id="xO4-8j-wFQ"/>
                         <outlet property="movieOrEpisodeSelector" destination="gfh-tH-XZf" id="fSo-Ck-zXl"/>
-                        <outlet property="okButton" destination="JhH-VG-II1" id="jAv-iV-VOl"/>
+                        <outlet property="submitButton" destination="JhH-VG-II1" id="jAv-iV-VOl"/>
                         <outlet property="textDisplayField" destination="Y8b-Ca-jEB" id="6R4-RH-bak"/>
                     </connections>
                 </viewController>

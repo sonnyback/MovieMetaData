@@ -10,7 +10,7 @@ import Cocoa
 
 class ViewController: NSViewController {
 
-    @IBOutlet var okButton: NSButton!
+    @IBOutlet var submitButton: NSButton!
     @IBOutlet var imdbIdInputField: NSTextField!
     @IBOutlet var textDisplayField: NSTextField! // displays text output of activity
     @IBOutlet var imageView: NSImageView! // for displaying movie image
@@ -20,7 +20,7 @@ class ViewController: NSViewController {
     var movieOrEpisode = " "
     var saveFolderPath: String? { // path of where to save the XML file
         didSet {
-            okButton.isEnabled = true // activate ok button once we have a save path
+            submitButton.isEnabled = true // activate ok button once we have a save path
             //print("Saving file to: \(self.saveFolderPath!)")
         }
     }
@@ -28,11 +28,12 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         print("Entered viewDidLoad...")
-        okButton.isEnabled = false // disabled until user selects save path
+        submitButton.isEnabled = false // disabled until user selects save path
         imageView.image = NSImage(named: "search-50") // sets the default image background
         setupPopUpSelector() // sets up the movie/episode selector
+        preferredContentSize = view.frame.size // prevent window from being resized
     }
 
     override var representedObject: Any? {
@@ -70,7 +71,7 @@ class ViewController: NSViewController {
         }
         textDisplayField.stringValue = ""
         imageView.image = NSImage(named: "search-50")
-        okButton.isEnabled = false // deactivate until user selects save path again
+        submitButton.isEnabled = false // deactivate until user selects save path again
         setupPopUpSelector()
     }
     
@@ -109,7 +110,7 @@ class ViewController: NSViewController {
         let popUpButtonTitles = ["Movie", "Episode"]
         movieOrEpisodeSelector.removeAllItems() // clear default values first
         movieOrEpisodeSelector.addItems(withTitles: popUpButtonTitles) // add our values
-        movieOrEpisodeSelector.select(movieOrEpisodeSelector.item(at: 0))
+        movieOrEpisodeSelector.select(movieOrEpisodeSelector.item(at: 0)) // use the first element as the default
     }
     
     /*
@@ -160,6 +161,7 @@ class ViewController: NSViewController {
                         if save(posterImage: image, to: saveToPath, for: movie.title) {
                             DispatchQueue.main.async {
                                 self.textDisplayField.stringValue += "\n\(saveToPath)/\(movie.title).jpg written successfully!"
+                                self.renameFileDialog(message: "\(saveToPath)/\(movie.title).jpg and \(movie.title).xml written successfully!")
                             }
                         } else {
                             DispatchQueue.main.async {
@@ -189,6 +191,9 @@ class ViewController: NSViewController {
             }
         } else {
             print("Yikes! No save path!")
+            DispatchQueue.main.async {
+                self.textDisplayField.stringValue += "Please choose a location to save the output files..."
+            }
         }
     }
     
@@ -236,6 +241,19 @@ class ViewController: NSViewController {
         } else {
             textDisplayField.stringValue += "\n" + text
         }
+    }
+    
+    private func renameFileDialog(message: String) {
+        print("Entered renameFile...")
+        let alert = NSAlert()
+        alert.informativeText = message
+        alert.messageText = "Success!"
+        alert.alertStyle = .informational
+        alert.addButton(withTitle: "OK")
+        alert.addButton(withTitle: "Cancel")
+        
+        alert.runModal()
+        //return alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn
     }
     
     private enum MediaType: String {

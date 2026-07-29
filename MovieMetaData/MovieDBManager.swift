@@ -17,15 +17,11 @@ struct MovieDBManager {
     let apiKeyString = "?api_key="
     let languageSource = "&language=en-US&external_source=imdb_id"
     
-//    init(movie: Movie) {
-//        //self.imdbMovieId = imdbMovieId
-//        self.movie = movie
-//    }
     
     /**
      * Method that handles creating the specific URL for each movie request.
      * @param imdbId: String
-     *  @return urlString: String
+     * @return urlString: String
      */
     func createURL(for imdbId: String) -> String {
         print("Entered createURL() for movieId: \(imdbId)")
@@ -35,42 +31,6 @@ struct MovieDBManager {
         return urlString
     }
     
-//    func fetchMovieDataFor(imdbId: String) {
-//        print("Entered fetchMovieDataFor(imdbId)...")
-//
-//        guard let url = URL(string: createURL(for: imdbId)) else { return }
-//        URLSession.shared.dataTask(with: url) { (data, _, error) in
-//            if let error = error {
-//                print("Error getting the URL:", error)
-//                return
-//            }
-//            guard let data = data else { return }
-//            do {
-//                let decoder = JSONDecoder()
-//                let root = try decoder.decode(Root.self, from: data)
-//                print("Movie: \(root)")
-//            } catch let jsonError {
-//                print("JSON error: ", jsonError)
-//            }
-//        }.resume()
-//    }
-    
-//    func fetchMovies(for imdbId: String) {
-//
-//        let url = URL(string: createURL(for: imdbId))
-//        let request = URLRequest(url: url!, cachePolicy: URLRequest.CachePolicy.reloadIgnoringCacheData, timeoutInterval: 10)
-//        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: .main)
-//
-//        let task = session.dataTask(with: request, completionHandler: { (dataOrNil, response, error) in
-//            if let data = dataOrNil {
-//                if let responseDictionary = try!  JSONSerialization.jsonObject(with: data, options: [])
-//                    as? NSDictionary {
-//                    print("Response: \(responseDictionary)")
-//                }
-//            }
-//        })
-//        task.resume()
-//    }
     
     /*
      * Method that fetches the JSON data from the URL for the IMDB ID,
