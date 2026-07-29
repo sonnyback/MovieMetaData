@@ -33,7 +33,7 @@ class ViewController: NSViewController {
         submitButton.isEnabled = false // disabled until user selects save path
         imageView.image = NSImage(named: "search-50") // sets the default image background
         setupPopUpSelector() // sets up the movie/episode selector
-        preferredContentSize = view.frame.size // prevent window from being resized
+        preferredContentSize = NSSize(width: 800, height: 600) // matches storyboard layout so the text field and image view are visible at launch
     }
 
     override var representedObject: Any? {
@@ -50,9 +50,9 @@ class ViewController: NSViewController {
         // TODO: change this to a guard let
         if movieId.isEmpty {
             print("Opps! You didn't enter an IMDB ID!")
-            textDisplayField.stringValue = "Opps! You didn't enter an IMDB ID! Try again..."
+            updateDisplayText(with: "Opps! You didn't enter an IMDB ID! Try again...", clearExisting: true)
         } else {
-            textDisplayField.stringValue = "IMDB id: \(movieId)" // show the imdb id in the text view
+            updateDisplayText(with: "IMDB id: \(movieId)", clearExisting: true) // show the imdb id in the text view
             movieOrEpisode = movieOrEpisodeSelector.selectedItem?.title ?? "Movie"
             // process the request on a background thread
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
@@ -69,7 +69,7 @@ class ViewController: NSViewController {
         if !imdbIdInputField.stringValue.isEmpty {
             imdbIdInputField.stringValue = ""
         }
-        textDisplayField.stringValue = ""
+        updateDisplayText(with: "", clearExisting: true)
         imageView.image = NSImage(named: "search-50")
         submitButton.isEnabled = false // deactivate until user selects save path again
         setupPopUpSelector()
@@ -96,7 +96,7 @@ class ViewController: NSViewController {
                 // do whatever you what with the file path
                 print("Folder to save to...\(selectedPath)")
                 self.saveFolderPath = selectedPath
-                self.textDisplayField.stringValue += "Saving output to: \(selectedPath)"
+                self.updateDisplayText(with: "Saving output to: \(selectedPath)", clearExisting: false)
             }
             openPanel.close()
         }
@@ -135,7 +135,7 @@ class ViewController: NSViewController {
                     movie.genre = movie.getGenreStringFrom(array: movie.genreIds)
                     
                     DispatchQueue.main.async {
-                        self.textDisplayField.stringValue += "\n\nTitle: \(movie.title)\n\nRelease Date: \(movie.releaseDate)\n\nGenre: \(movie.genre)\n\nOverview: \(movie.overview)\n"
+                        self.updateDisplayText(with: "\nTitle: \(movie.title)\n\nRelease Date: \(movie.releaseDate)\n\nGenre: \(movie.genre)\n\nOverview: \(movie.overview)\n", clearExisting: false)
                     }
                     
                     print("Writing file to: \(saveToPath)")
@@ -143,9 +143,9 @@ class ViewController: NSViewController {
                     /******* Write the XML file to the disk! *******/
                     DispatchQueue.main.async {
                         if XMLWriter.writeXMLOutputFor(movie: movie, to: saveToPath) {
-                            self.textDisplayField.stringValue += "\n\(saveToPath)/\(movie.title).xml written successfully!"
+                            self.updateDisplayText(with: "\(saveToPath)/\(movie.title).xml written successfully!", clearExisting: false)
                         } else {
-                            self.textDisplayField.stringValue += "Dang! Error trying to save the XML file to the disk."
+                            self.updateDisplayText(with: "Dang! Error trying to save the XML file to the disk.", clearExisting: false)
                         }
                     }
                     
@@ -160,24 +160,24 @@ class ViewController: NSViewController {
                         /******* Write the image file to the disk! *******/
                         if save(posterImage: image, to: saveToPath, for: movie.title) {
                             DispatchQueue.main.async {
-                                self.textDisplayField.stringValue += "\n\(saveToPath)/\(movie.title).jpg written successfully!"
+                                self.updateDisplayText(with: "\(saveToPath)/\(movie.title).jpg written successfully!", clearExisting: false)
                                 self.renameFileDialog(message: "\(saveToPath)/\(movie.title).jpg and \(movie.title).xml written successfully!")
                             }
                         } else {
                             DispatchQueue.main.async {
-                                self.textDisplayField.stringValue += "Dang! Error trying to save the image file to the disk."
+                                self.updateDisplayText(with: "Dang! Error trying to save the image file to the disk.", clearExisting: false)
                             }
                         }
                     } else {
                         DispatchQueue.main.async {
-                            self.textDisplayField.stringValue += "Opps! Error trying to retrieve the image file!"
+                            self.updateDisplayText(with: "Opps! Error trying to retrieve the image file!", clearExisting: false)
                         }
                         print("Error retrieving image file!")
                     }
                 } else {
                     print("Error: nil was returned instead of a Movie")
                     DispatchQueue.main.async {
-                        self.textDisplayField.stringValue = "Error! Wanted a movie but got nil! 😤🤬"
+                        self.updateDisplayText(with: "Error! Wanted a movie but got nil! 😤🤬", clearExisting: true)
                     }
                 }
             } else if movieOrEpisode == MediaType.episode.rawValue {
@@ -192,7 +192,7 @@ class ViewController: NSViewController {
         } else {
             print("Yikes! No save path!")
             DispatchQueue.main.async {
-                self.textDisplayField.stringValue += "Please choose a location to save the output files..."
+                self.updateDisplayText(with: "Please choose a location to save the output files...", clearExisting: false)
             }
         }
     }
@@ -235,12 +235,16 @@ class ViewController: NSViewController {
     }
     
     private func updateDisplayText(with text: String, clearExisting: Bool) {
-        
+
         if clearExisting {
             textDisplayField.stringValue = text
         } else {
             textDisplayField.stringValue += "\n" + text
         }
+        // the text field's layer-backed ancestor view doesn't always pick up
+        // stringValue changes on its own, leaving stale text until the field
+        // becomes first responder (e.g. a click) forces a redraw
+        textDisplayField.needsDisplay = true
     }
     
     private func renameFileDialog(message: String) {

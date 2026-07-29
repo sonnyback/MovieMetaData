@@ -711,9 +711,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JhH-VG-II1">
-                                <rect key="frame" x="172" y="552" width="83" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vzb-s4-AWG">
+                                <rect key="frame" x="20" y="552" width="250" height="24"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Enter IMDB Movie ID..." drawsBackground="YES" id="0bj-wB-hN2">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JhH-VG-II1">
+                                <rect key="frame" x="282" y="548" width="83" height="32"/>
                                 <buttonCell key="cell" type="push" title="Submit" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Hal-2i-7cJ">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -725,32 +732,8 @@ DQ
                                     <action selector="submitButtonClicked:" target="XfG-lQ-9wD" id="M6n-p6-zf8"/>
                                 </connections>
                             </button>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vzb-s4-AWG">
-                                <rect key="frame" x="22" y="559" width="148" height="21"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Enter IMDB Movie ID..." drawsBackground="YES" id="0bj-wB-hN2">
-                                    <font key="font" usesAppearanceFont="YES"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y8b-Ca-jEB">
-                                <rect key="frame" x="18" y="57" width="380" height="486"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" selectable="YES" borderStyle="bezel" drawsBackground="YES" id="ikw-KP-ZaC">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O0R-nl-dkR">
-                                <rect key="frame" x="403" y="57" width="380" height="486"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="fMo-dQ-DdC"/>
-                            </imageView>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="06F-3g-wja">
-                                <rect key="frame" x="242" y="552" width="72" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="06F-3g-wja">
+                                <rect key="frame" x="377" y="548" width="72" height="32"/>
                                 <buttonCell key="cell" type="push" title="Clear" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PuT-dd-YYx">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -759,9 +742,26 @@ DQ
                                     <action selector="clearButtonClicked:" target="XfG-lQ-9wD" id="h4v-PI-Tr4"/>
                                 </connections>
                             </button>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gfh-tH-XZf">
-                                <rect key="frame" x="695" y="556" width="88" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1aW-kc-j7i">
+                                <rect key="frame" x="461" y="548" width="81" height="32"/>
+                                <buttonCell key="cell" type="push" title="Save..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bBV-So-0m7">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="saveButtonClicked:" target="XfG-lQ-9wD" id="RAc-h8-qLu"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-Typ-01">
+                                <rect key="frame" x="612" y="556" width="40" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Type:" id="lbl-Typ-01-cell">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gfh-tH-XZf">
+                                <rect key="frame" x="660" y="551" width="120" height="25"/>
                                 <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="3GC-nN-py0" id="GXQ-1U-vUv">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="message"/>
@@ -774,18 +774,43 @@ DQ
                                     </menu>
                                 </popUpButtonCell>
                             </popUpButton>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1aW-kc-j7i">
-                                <rect key="frame" x="301" y="552" width="81" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Save..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bBV-So-0m7">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Y8b-Ca-jEB">
+                                <rect key="frame" x="20" y="20" width="370" height="508"/>
+                                <textFieldCell key="cell" selectable="YES" borderStyle="bezel" drawsBackground="YES" id="ikw-KP-ZaC">
                                     <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="saveButtonClicked:" target="XfG-lQ-9wD" id="RAc-h8-qLu"/>
-                                </connections>
-                            </button>
+                                    <color key="textColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="O0R-nl-dkR">
+                                <rect key="frame" x="410" y="20" width="370" height="508"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="fMo-dQ-DdC"/>
+                            </imageView>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="vzb-s4-AWG" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="con-01"/>
+                            <constraint firstItem="vzb-s4-AWG" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="con-02"/>
+                            <constraint firstItem="JhH-VG-II1" firstAttribute="leading" secondItem="vzb-s4-AWG" secondAttribute="trailing" constant="12" id="con-03"/>
+                            <constraint firstItem="JhH-VG-II1" firstAttribute="centerY" secondItem="vzb-s4-AWG" secondAttribute="centerY" id="con-04"/>
+                            <constraint firstItem="06F-3g-wja" firstAttribute="leading" secondItem="JhH-VG-II1" secondAttribute="trailing" constant="12" id="con-05"/>
+                            <constraint firstItem="06F-3g-wja" firstAttribute="centerY" secondItem="vzb-s4-AWG" secondAttribute="centerY" id="con-06"/>
+                            <constraint firstItem="1aW-kc-j7i" firstAttribute="leading" secondItem="06F-3g-wja" secondAttribute="trailing" constant="12" id="con-07"/>
+                            <constraint firstItem="1aW-kc-j7i" firstAttribute="centerY" secondItem="vzb-s4-AWG" secondAttribute="centerY" id="con-08"/>
+                            <constraint firstItem="lbl-Typ-01" firstAttribute="leading" secondItem="1aW-kc-j7i" secondAttribute="trailing" constant="12" id="con-09"/>
+                            <constraint firstItem="lbl-Typ-01" firstAttribute="centerY" secondItem="vzb-s4-AWG" secondAttribute="centerY" id="con-10"/>
+                            <constraint firstItem="gfh-tH-XZf" firstAttribute="leading" secondItem="lbl-Typ-01" secondAttribute="trailing" constant="8" id="con-11"/>
+                            <constraint firstItem="gfh-tH-XZf" firstAttribute="centerY" secondItem="vzb-s4-AWG" secondAttribute="centerY" id="con-12"/>
+                            <constraint firstItem="gfh-tH-XZf" firstAttribute="trailing" secondItem="m2S-Jp-Qdl" secondAttribute="trailing" constant="-20" id="con-13"/>
+                            <constraint firstItem="Y8b-Ca-jEB" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="con-14"/>
+                            <constraint firstItem="Y8b-Ca-jEB" firstAttribute="top" secondItem="JhH-VG-II1" secondAttribute="bottom" constant="20" id="con-15"/>
+                            <constraint firstItem="Y8b-Ca-jEB" firstAttribute="bottom" secondItem="m2S-Jp-Qdl" secondAttribute="bottom" constant="-20" id="con-16"/>
+                            <constraint firstItem="O0R-nl-dkR" firstAttribute="leading" secondItem="Y8b-Ca-jEB" secondAttribute="trailing" constant="20" id="con-17"/>
+                            <constraint firstItem="O0R-nl-dkR" firstAttribute="top" secondItem="JhH-VG-II1" secondAttribute="bottom" constant="20" id="con-18"/>
+                            <constraint firstItem="O0R-nl-dkR" firstAttribute="bottom" secondItem="m2S-Jp-Qdl" secondAttribute="bottom" constant="-20" id="con-19"/>
+                            <constraint firstItem="O0R-nl-dkR" firstAttribute="trailing" secondItem="m2S-Jp-Qdl" secondAttribute="trailing" constant="-20" id="con-20"/>
+                            <constraint firstItem="O0R-nl-dkR" firstAttribute="width" secondItem="Y8b-Ca-jEB" secondAttribute="width" id="con-21"/>
+                            <constraint firstItem="Y8b-Ca-jEB" firstAttribute="height" relation="greaterThanOrEqual" constant="508" id="con-22"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="clearButton" destination="06F-3g-wja" id="0lt-gz-GvX"/>
