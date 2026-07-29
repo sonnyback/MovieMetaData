@@ -708,11 +708,11 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="MovieMetaData" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="592"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vzb-s4-AWG">
-                                <rect key="frame" x="20" y="552" width="250" height="24"/>
+                                <rect key="frame" x="20" y="548" width="395" height="24"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Enter IMDB Movie ID..." drawsBackground="YES" id="0bj-wB-hN2">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -720,7 +720,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JhH-VG-II1">
-                                <rect key="frame" x="282" y="548" width="83" height="32"/>
+                                <rect key="frame" x="427" y="548" width="67" height="24"/>
                                 <buttonCell key="cell" type="push" title="Submit" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Hal-2i-7cJ">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -733,7 +733,7 @@ DQ
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="06F-3g-wja">
-                                <rect key="frame" x="377" y="548" width="72" height="32"/>
+                                <rect key="frame" x="506" y="548" width="56" height="24"/>
                                 <buttonCell key="cell" type="push" title="Clear" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PuT-dd-YYx">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -743,7 +743,7 @@ DQ
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1aW-kc-j7i">
-                                <rect key="frame" x="461" y="548" width="81" height="32"/>
+                                <rect key="frame" x="574" y="548" width="65" height="24"/>
                                 <buttonCell key="cell" type="push" title="Save..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bBV-So-0m7">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -753,7 +753,7 @@ DQ
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-Typ-01">
-                                <rect key="frame" x="612" y="556" width="40" height="17"/>
+                                <rect key="frame" x="649" y="552" width="38" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Type:" id="lbl-Typ-01-cell">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -761,7 +761,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gfh-tH-XZf">
-                                <rect key="frame" x="660" y="551" width="120" height="25"/>
+                                <rect key="frame" x="693" y="548" width="87" height="24"/>
                                 <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="3GC-nN-py0" id="GXQ-1U-vUv">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="message"/>
@@ -783,7 +783,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="O0R-nl-dkR">
-                                <rect key="frame" x="410" y="20" width="370" height="508"/>
+                                <rect key="frame" x="407" y="17" width="376" height="514"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="fMo-dQ-DdC"/>
                             </imageView>
                         </subviews>
