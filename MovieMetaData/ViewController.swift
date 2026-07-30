@@ -241,10 +241,6 @@ class ViewController: NSViewController {
         } else {
             textDisplayField.stringValue += "\n" + text
         }
-        // the text field's layer-backed ancestor view doesn't always pick up
-        // stringValue changes on its own, leaving stale text until the field
-        // becomes first responder (e.g. a click) forces a redraw
-        textDisplayField.needsDisplay = true
     }
     
     private func renameFileDialog(message: String) {
